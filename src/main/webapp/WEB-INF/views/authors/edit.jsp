@@ -16,14 +16,11 @@
 <center>
     <form:form modelAttribute="editingAuthor" method="post">
         <form:errors path="*"/><br>
-        <form:input path="firstName"/>
-        <form:input path="lastName"/>
-        <form:input path="pesel"/>
-        <form:input path="email"/>
-        <form:input path="yearOfBirth"/>
-
-        <%--<form:select path="publisher.id" items="${publishers}" itemLabel="name" itemValue="id"/>--%>
-        <%--<form:select path="authors" items="${authors}" itemLabel="fullName" itemValue="id"/>--%>
+        <form:input path="firstName" placeholder="podaj imię"/>
+        <form:input path="lastName" placeholder="podaj nazwisko"/>
+        <form:input path="pesel" placeholder="podaj pesel"/>
+        <form:input path="email" placeholder="podaj email"/>
+        <form:input path="yearOfBirth" placeholder="podaj rok urodzenia"/>
 
         <input type="submit" value="send"/>
     </form:form>

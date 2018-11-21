@@ -52,11 +52,16 @@ public class BookController {
     }
 
     @PostMapping("/edit/{id:[0-9]+}")
-    public String saveEditedBook(Book book,
+    public String saveEditedBook(@ModelAttribute("editingBook") @Valid Book book,
+                                 BindingResult bindingResult,
                                  @PathVariable Long id) {
         book.setId(id);
-        bookDao.update(book);
-        return "redirect:/books";
+        if (bindingResult.hasErrors()) {
+            return "/books/edit";
+        } else {
+            bookDao.update(book);
+            return "redirect:/books";
+        }
     }
 
 

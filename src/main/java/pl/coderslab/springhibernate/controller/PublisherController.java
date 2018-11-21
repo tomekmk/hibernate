@@ -3,6 +3,7 @@ package pl.coderslab.springhibernate.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.springhibernate.dao.BookDao;
 import pl.coderslab.springhibernate.dao.PublisherDao;
@@ -10,6 +11,7 @@ import pl.coderslab.springhibernate.model.Book;
 import pl.coderslab.springhibernate.model.Publisher;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validator;
 import java.util.List;
 import java.util.Set;
@@ -38,14 +40,16 @@ public class PublisherController {
     }
 
     @PostMapping("/create")
-    public String createNewPublisher(Publisher publisher, Model model) {
-        Set<ConstraintViolation<Publisher>> validate = validator.validate(publisher);
-        if (validate.isEmpty()) {
+    public String createNewPublisher(@ModelAttribute("newPublisher") @Valid Publisher publisher,
+                                     BindingResult bindingResult) {
+//        Set<ConstraintViolation<Publisher>> validate = validator.validate(publisher);
+//        if (validate.isEmpty()) {
+        if (!bindingResult.hasErrors()) {
             publisherDao.save(publisher);
             return "redirect:/publishers";
         } else {
-            model.addAttribute("errors", validate);
-            return "/validation/errors";
+//            model.addAttribute("errors", validate);
+            return "/publishers/create";
         }
     }
 
@@ -66,17 +70,18 @@ public class PublisherController {
     }
 
     @PostMapping("/edit/{Id}")
-    public String editPublisher(Publisher publisher,
-                                @PathVariable Long Id,
-                                Model model) {
+    public String editPublisher(@ModelAttribute("publisher") @Valid Publisher publisher,
+                                BindingResult bindingResult,
+                                @PathVariable Long Id) {
         publisher.setId(Id);
-        Set<ConstraintViolation<Publisher>> validate = validator.validate(publisher);
-        if (validate.isEmpty()) {
+//        Set<ConstraintViolation<Publisher>> validate = validator.validate(publisher);
+//        if (validate.isEmpty()) {
+        if (!bindingResult.hasErrors()) {
             publisherDao.update(publisher);
             return "redirect:/publishers";
         } else {
-            model.addAttribute("errors", validate);
-            return "/validation/errors";
+//            model.addAttribute("errors", validate);
+            return "/publishers/edit";
         }
     }
 

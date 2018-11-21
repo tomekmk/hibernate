@@ -22,9 +22,6 @@
         <form:input path="email" placeholder="podaj email"/>
         <form:input path="yearOfBirth" placeholder="podaj rok urodzenia"/>
 
-        <%--<form:select path="publisher.id" items="${publishers}" itemLabel="name" itemValue="id"/>--%>
-        <%--<form:select path="authors" items="${authors}" itemLabel="fullName" itemValue="id"/>--%>
-
         <input type="submit" value="send"/>
     </form:form>
 

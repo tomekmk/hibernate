@@ -15,8 +15,10 @@
 
 <center>
     <form:form modelAttribute="editingBook" method="post">
+        <div><form:errors path="*" /></div>
         <form:input path="title"/>
         <form:input path="description"/>
+        <form:input path="pages" placeholder="Podaj liczbę stron" type = "number" />
 
         <form:select path="publisher.id" items="${publishers}" itemLabel="name" itemValue="id"/>
         <form:select path="authors" items="${authors}" itemLabel="fullName" itemValue="id"/>

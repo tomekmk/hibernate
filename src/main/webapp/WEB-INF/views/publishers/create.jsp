@@ -15,6 +15,7 @@
 
 <center>
     <form:form modelAttribute="newPublisher" method="post">
+        <form:errors path="*"/>
         <form:input path="name" placeholder="podaj nazwę"/>
         <form:input path="nip" placeholder="podaj nip"/>
         <form:input path="regon" placeholder="podaj regon"/>

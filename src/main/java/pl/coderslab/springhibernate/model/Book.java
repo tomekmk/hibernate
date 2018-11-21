@@ -1,5 +1,7 @@
 package pl.coderslab.springhibernate.model;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -31,7 +33,17 @@ public class Book {
     @Min(value = 2)
     private Integer pages;
 
+    private Boolean proposition;
+
     public Book() {
+    }
+
+    public Boolean getProposition() {
+        return proposition;
+    }
+
+    public void setProposition(Boolean proposition) {
+        this.proposition = proposition;
     }
 
     public Integer getPages() {

@@ -35,7 +35,8 @@ public class AuthorController {
     }
 
     @PostMapping("/create")
-    public String createNewAuthor(@ModelAttribute("newAuthor") @Valid Author author, BindingResult bindingResult) {
+    public String createNewAuthor(@ModelAttribute("newAuthor") @Valid Author author,
+                                  BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             authorDao.save(author);
             return "redirect:/authors";
@@ -61,17 +62,17 @@ public class AuthorController {
     }
 
     @PostMapping("/edit/{Id}")
-    public String editAuthor(Author author,
-                             @PathVariable Long Id,
-                             Model model) {
+    public String editedAuthor(@ModelAttribute("editingAuthor") @Valid Author author,
+                             BindingResult bindingResult,
+                             @PathVariable Long Id) {
         author.setId(Id);
-        Set<ConstraintViolation<Author>> validate = validator.validate(author);
-        if (validate.isEmpty()) {
+//        Set<ConstraintViolation<Author>> validate = validator.validate(author);
+//        if (validate.isEmpty()) {
+        if (!bindingResult.hasErrors()) {
             authorDao.update(author);
             return "redirect:/authors";
         } else {
-            model.addAttribute("errors", validate);
-            return "/validation/errors";
+            return "/authors/edit";
         }
     }
 }
