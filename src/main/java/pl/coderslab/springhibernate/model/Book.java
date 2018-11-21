@@ -1,6 +1,7 @@
 package pl.coderslab.springhibernate.model;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.springhibernate.config.validation.ExValid;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -17,20 +18,20 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne @NotNull
+    @ManyToOne @NotNull(groups = ExValid.class)
     private Publisher publisher;
 
-    @ManyToMany(fetch = FetchType.EAGER) @NotNull(message = "Książka musi posiadać listę autorów")
-    @Size(min = 1, message = "Ksiązka musi posiadać przynajmniej jednego autora")
+    @ManyToMany(fetch = FetchType.EAGER) @NotNull(message = "Książka musi posiadać listę autorów", groups = ExValid.class)
+    @Size(min = 1, message = "Ksiązka musi posiadać przynajmniej jednego autora", groups = ExValid.class)
     private List<Author> authors;
 
-    @Column(nullable = false, unique = true) @Size(min = 5)
+    @Column(nullable = false, unique = true) @Size(min = 5) @NotBlank @NotNull
     private String title;
     @Column(columnDefinition = "TEXT") @Size(max = 600)
     private String description;
-    @Column(scale = 2, precision = 4) @Min(value = 1) @Max(value = 10)
+    @Column(scale = 2, precision = 4) @Min(value = 1, groups = ExValid.class) @Max(value = 10, groups = ExValid.class)
     private Double rating;
-    @Min(value = 2)
+    @Min(value = 2, groups = ExValid.class)
     private Integer pages;
 
     private Boolean proposition;

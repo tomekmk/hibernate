@@ -1,10 +1,13 @@
 package pl.coderslab.springhibernate.controller;
 
+import org.hibernate.cfg.annotations.reflection.XMLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.springhibernate.config.validation.ExValid;
 import pl.coderslab.springhibernate.dao.AuthorDao;
 import pl.coderslab.springhibernate.dao.BookDao;
 import pl.coderslab.springhibernate.dao.PublisherDao;
@@ -12,11 +15,8 @@ import pl.coderslab.springhibernate.model.Author;
 import pl.coderslab.springhibernate.model.Book;
 import pl.coderslab.springhibernate.model.Publisher;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.Arrays;
+import javax.validation.groups.Default;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 @RequestMapping(value = "/books", produces = "text/html;charset=UTF-8")
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @PostMapping("/edit/{id:[0-9]+}")
-    public String saveEditedBook(@ModelAttribute("editingBook") @Valid Book book,
+    public String saveEditedBook(@ModelAttribute("editingBook") @Validated({ExValid.class, Default.class}) Book book,
                                  BindingResult bindingResult,
                                  @PathVariable Long id) {
         book.setId(id);
@@ -80,7 +80,7 @@ public class BookController {
     }
 
     @PostMapping("/create")
-    public String saveBook(@ModelAttribute("newBook") @Valid Book book, BindingResult bindingResult) {
+    public String saveBook(@ModelAttribute("newBook") @Validated({ExValid.class, Default.class}) Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/books/create";
         } else {

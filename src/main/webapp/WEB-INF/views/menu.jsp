@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: tomek
@@ -16,6 +17,7 @@
     <h4><a href="/books">książki</a></h4>
     <h4><a href="/authors">autorzy</a></h4>
     <h4><a href="/publishers">wydawcy</a></h4>
+    <h4><a href="/propositions">proponowane</a></h4>
 </center>
 
 </body>
